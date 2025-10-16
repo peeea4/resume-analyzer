@@ -31,18 +31,17 @@ const upload = () => {
 
 		const uploadedFile = await fs.upload([file]);
 
-		if (!uploadedFile) return setStatusText("Failed to upload file");
+		if (!uploadedFile) return setStatusText("Error: Failed to upload file");
 
 		setStatusText("Converting to image...");
 		const imageFile = await convertPdfToImage(file);
 
-		if (!imageFile.file) return setStatusText("Failed to convert PDF to image");
+		if (!imageFile.file) return setStatusText("Error: Failed to convert PDF to image");
 
-		setStatusText("Uploading the image");
-
+		setStatusText("Uploading the image...");
 		const uploadedImage = await fs.upload([imageFile.file]);
 
-		if (!uploadedImage) return setStatusText("Failed to upload image");
+		if (!uploadedImage) return setStatusText("Error: Failed to upload image");
 
 		setStatusText("Preparing data...");
 
@@ -50,8 +49,8 @@ const upload = () => {
 
 		const data = {
 			id: uuid,
-			resumePath: uploadedImage.path,
-			filePath: uploadedFile.path,
+			resumePath: uploadedFile.path,
+			imagePath: uploadedImage.path,
 			companyName,
 			jobDescription,
 			jobTitle,
@@ -81,6 +80,8 @@ const upload = () => {
 		setStatusText("Analysis complete, redirecting...");
 
 		console.log(data);
+
+		navigate(`/resume/${uuid}`);
 	};
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -90,10 +91,10 @@ const upload = () => {
 
 		if (!form) return;
 
-		const formdata = new FormData(form);
-		const companyName = formdata.get("company-name") as string;
-		const jobTitle = formdata.get("job-title") as string;
-		const jobDescription = formdata.get("job-description") as string;
+		const formData = new FormData(form);
+		const companyName = formData.get("company-name") as string;
+		const jobTitle = formData.get("job-title") as string;
+		const jobDescription = formData.get("job-description") as string;
 
 		if (!file) return;
 
