@@ -9,7 +9,7 @@ const ResumeCard = ({
 	resume: Resume;
 }) => {
 	const [resumeUrl, setResumeUrl] = useState("");
-	const { auth, fs } = usePuterStore();
+	const { fs } = usePuterStore();
 
 	useEffect(() => {
 		const loadResume = async () => {
@@ -17,7 +17,7 @@ const ResumeCard = ({
 
 			if (!blob) return;
 
-			let url = URL.createObjectURL(blob);
+			const url = URL.createObjectURL(blob);
 
 			setResumeUrl(url);
 		};

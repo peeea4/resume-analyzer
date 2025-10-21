@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import NavBar from "~/components/NavBar";
 import ResumeCard from "~/components/ResumeCard";
 import type { Route } from "./+types/home";

@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, use, useState } from "react";
 import { cn } from "~/lib/utils";
 
 interface AccordionContextType {
@@ -11,7 +11,7 @@ interface AccordionContextType {
 const AccordionContext = createContext<AccordionContextType | undefined>(undefined);
 
 const useAccordion = () => {
-	const context = useContext(AccordionContext);
+	const context = use(AccordionContext);
 
 	if (!context) {
 		throw new Error("Accordion components must be used within an Accordion");
@@ -48,9 +48,9 @@ export const Accordion: FC<IAccordionProps> = ({
 	const isItemActive = (id: string) => activeItems.includes(id);
 
 	return (
-		<AccordionContext.Provider value={{ activeItems, toggleItem, isItemActive }}>
+		<AccordionContext value={{ activeItems, toggleItem, isItemActive }}>
 			<div className={`space-y-2 ${className}`}>{children}</div>
-		</AccordionContext.Provider>
+		</AccordionContext>
 	);
 };
 
@@ -60,7 +60,7 @@ interface IAccordionItemProps {
 	className?: string;
 }
 
-export const AccordionItem: FC<IAccordionItemProps> = ({ id, children, className = "" }) => {
+export const AccordionItem: FC<IAccordionItemProps> = ({ children, className = "" }) => {
 	return <div className={`overflow-hidden border-b border-gray-200 ${className}`}>{children}</div>;
 };
 

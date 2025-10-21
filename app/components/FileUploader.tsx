@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { formatSize } from "../lib/utils";
 
@@ -16,9 +16,9 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
 		[onFileSelect],
 	);
 
-	const maxFileSize = 20 * 1024 * 1024; // 20MB in bytes
+	const maxFileSize = 20 * 1024 * 1024;
 
-	const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
+	const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
 		onDrop,
 		multiple: false,
 		accept: { "application/pdf": [".pdf"] },
@@ -42,12 +42,7 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
 									<p className="text-sm text-gray-500">{formatSize(file.size)}</p>
 								</div>
 							</div>
-							<button
-								className="p-2 cursor-pointer"
-								onClick={(e) => {
-									onFileSelect?.(null);
-								}}
-							>
+							<button className="p-2 cursor-pointer" onClick={() => onFileSelect?.(null)}>
 								<img src="/icons/cross.svg" alt="remove" className="w-4 h-4" />
 							</button>
 						</div>

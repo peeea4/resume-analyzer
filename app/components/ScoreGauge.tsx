@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type FC } from "react";
 
-interface IScoreGaugeProps {
+type IScoreGaugeProps = {
 	score: number;
-}
+};
 
 const ScoreGauge: FC<IScoreGaugeProps> = ({ score = 75 }) => {
 	const [pathLength, setPathLength] = useState(0);
